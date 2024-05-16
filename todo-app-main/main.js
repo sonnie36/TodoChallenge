@@ -1,44 +1,57 @@
-const taskInput = document.getElementById('input')
-// const taskField = document.querySelector('.taskField')
-const taskDesc = document.querySelector('.desc')
-const checkBtn = document.querySelector('.checkBtn')
-const checkInput = document.querySelector('.check')
-const heroDiv = document.getElementsByClassName('Hero')
+const mode = document.querySelector('.mode');
+const inputField = document.querySelector('#input');
+const Add = document.querySelector('.checkBtn');
 
+let allTasks = [];
 
-function createCard(taskDescription) {
-    const card = document.createElement('div');
-    card.classList.add('card');
+Add.addEventListener('click', () => {
+    let newTask = {
+        Task: inputField.value,
+        Completed: false
+    };
+
+    if (newTask.Task !== '') {
+        allTasks.push(newTask);
+        localStorage.setItem('Tasks', JSON.stringify(allTasks));
+        inputField.value = '';
+        AddCardTask(newTask);
+    }
+});
+
+function AddCardTask(task) {
+    const card = document.querySelector('.card');
     
-    const taskDiv = document.createElement('div');
-    taskDiv.classList.add('task');
-    
+    const TaskField = document.createElement('div');
+    TaskField.classList.add('taskField');
+     
     const checkIcon = document.createElement('img');
-    checkIcon.src = 'images/icon-check.svg'; 
+    checkIcon.src = 'images/icon-check.svg';
     checkIcon.classList.add('check-icon');
-    
+
+    const taskDesc = document.createElement('p');
+    taskDesc.textContent = task.Task;
+    if (task.Completed) {
+        taskDesc.style.textDecoration = "line-through";
+    }
+
     const deleteIcon = document.createElement('img');
-    deleteIcon.src = 'delete_icon.png';
+    deleteIcon.src = 'images/icon-cross.svg';
     deleteIcon.classList.add('delete-icon');
-    
-    const taskText = document.createElement('p');
-    taskText.textContent = taskDescription;
-    
-    taskDiv.appendChild(checkIcon);
-    taskDiv.appendChild(taskText);
-    taskDiv.appendChild(deleteIcon);
-    
-    card.appendChild(taskDiv);
-    
-    return card;
-  }
-  checkBtn.addEventListener('click',()=>{
-    const taskDescription = taskInput.value.trim();
-    if (taskDescription !== '') {
-        const newCard = createCard(taskDescription);
-        heroDiv.appendChild(newCard);
-        taskInput.value = ''; 
-      }
-    
-  })
-  
+
+    TaskField.appendChild(checkIcon);
+    TaskField.appendChild(taskDesc);
+    TaskField.appendChild(deleteIcon);
+
+    card.appendChild(TaskField);
+}
+
+// Load tasks from localStorage on page load
+window.onload = function() {
+    let tasks = JSON.parse(localStorage.getItem('Tasks'));
+    if (tasks) {
+        allTasks = tasks;
+        for (let task of tasks) {
+            AddCardTask(task);
+        }
+    }
+};
