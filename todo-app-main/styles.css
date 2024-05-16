@@ -44,7 +44,15 @@ body{
     border-radius: 5px;
     /* width: 40vw; */
 }
+.checkBtn{
+    background-color: rgb(241, 17, 241);
+    padding: 10px;
+    border: none;
+    color: white;
+}
 .card{
+    display: flex;
+    flex-direction: column-reverse;
     background-color: white;
     border-radius: 10px;
     margin: 0 auto;
@@ -59,3 +67,59 @@ body{
     padding: 10px; 
     border-bottom: 1px solid #ddd; 
   }
+  .track{
+    padding:10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .state{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap:10px;
+  }
+  .circle{
+    border-radius: 50%;
+    vertical-align: middle;
+    /* appearance: none; */
+  }
+  /* .all{
+    border: none;
+    background-color: transparent;
+    
+  } */
+  .checkSection{
+    display:flex;
+    flex-direction: center;
+    align-items: center;
+    gap:10px;
+  }
+  .circle {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    appearance: none;
+    outline: none;
+    border: 1px solid #000;
+    transition: background-color 0.3s ease;
+    position: relative;
+}
+
+.circle:after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 0;
+ 
+
+}
+
+.circle:checked {
+    background-color:#e477de;
+    border: 1px solid #e477de;
+}
+
+.circle:checked:after {
+    border-bottom-color: #fff;
+}
